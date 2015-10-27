@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.5. Molmatch Commands</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="ch03.html" title="Chapter 3. Command Reference" /><link rel="prev" href="ch03s04.html" title="3.4. Modification Commands" /><link rel="next" href="ch03s06.html" title="3.6. Property Commands" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.5. Molmatch Commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Command Reference</th><td width="20%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="molmatch-commands"></a>3.5. Molmatch Commands</h2></div></div></div><p>
+      The <span class="emphasis"><em>molmatch</em></span> functions permit to compare
+      chemical structures.
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a id="BIT_FP_AND"></a>
+          <span class="command"><strong>BIT_FP_AND(<em class="replaceable"><code>fingerprint</code></em>,<em class="replaceable"><code>fingerprint</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>BIT_FP_AND()</strong></span> operates on two fingerprints
+          (bit patterns) of equal length and performs the logical AND
+          operation on each pair of corresponding bits. In each pair,
+          the result is 1 if the both bits are 1. Otherwise, the result
+          is 0. If the two fingerprints do not have the same length, the
+          function returns NULL.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT BIT_FP_AND(<em class="replaceable"><code>fingerprint1</code></em>,<em class="replaceable"><code>fingerprint2</code></em>);</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint</code></em>
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            The <a class="xref" href="ch03s05.html#BIT_FP_AND">BIT_FP_AND()</a>
+            function is very useful when working with structure
+            fingerprints. For example, if a molecule (with a fingerprint
+            <em class="replaceable"><code>fp1</code></em>) is a substructure of an
+            other molecule (with a fingerprint
+            <em class="replaceable"><code>fp2</code></em>), the following property is
+            observed:
+          </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT TANIMOTO(BIT_FP_AND(<em class="replaceable"><code>fp1</code></em>,<em class="replaceable"><code>fp2</code></em>),<em class="replaceable"><code>fp1</code></em>);</code></strong>
+        -&gt; 1
+</pre></div></li><li class="listitem"><p><a id="BIT_FP_COUNT"></a>
+          <span class="command"><strong>BIT_FP_COUNT(<em class="replaceable"><code>fingerprint</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>BIT_FP_COUNT()</strong></span> returns the number of bits
+          that are set in the <span class="emphasis"><em>fingerprint</em></span> binary
+          representation.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT BIT_FP_COUNT(<em class="replaceable"><code>fp_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='1H-indole';</code></strong>
+        -&gt; 23
+</pre></li><li class="listitem"><p><a id="BIT_FP_OR"></a>
+          <span class="command"><strong>BIT_FP_OR(<em class="replaceable"><code>fingerprint</code></em>,<em class="replaceable"><code>fingerprint</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>BIT_FP_OR()</strong></span> operates on two fingerprints
+          (bit patterns) of equal length and performs the logical OR
+          operation on each pair of corresponding bits. In each pair, if
+          the first bit is 1 or the second bit is 1 (or both), the
+          result is 1. Otherwise, the result is 0. If the two
+          fingerprints do not have same length, the function returns
+          NULL.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT BIT_FP_OR(<em class="replaceable"><code>fingerprint1</code></em>,<em class="replaceable"><code>fingerprint2</code></em>);</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint</code></em>
+</pre></li><li class="listitem"><p><a id="MATCH_SUBSTRUCT"></a>
+          <span class="command"><strong>MATCH_SUBSTRUCT(<em class="replaceable"><code>query_smarts</code></em>,<em class="replaceable"><code>reference_obmol</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MATCH_SUBSTRUCT()</strong></span> checks if a
+          <span class="emphasis"><em>query_smarts</em></span> fragment is a substructure
+          of a <span class="emphasis"><em>reference_obmol</em></span> molecule. The first
+          argument is a SMARTS string, whereas the second argument is a
+          serialized OBMol object. The second argument type is generated
+          by the
+          <a class="xref" href="ch03s02.html#MOLECULE_TO_SERIALIZEDOBMOL">MOLECULE_TO_SERIALIZEDOBMOL()</a>
+          function. If the <span class="emphasis"><em>query_smarts</em></span> is a
+          substructure of <span class="emphasis"><em>reference_obmol</em></span>, the
+          function returns 1, otherwise, it returns 0.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MATCH_SUBSTRUCT('C=O',<em class="replaceable"><code>serializedobmol_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 1
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            If the function encounter an error, it returns NULL.
+          </p></div></li><li class="listitem"><p><a id="SUBSTRUCT_ATOM_IDS"></a>
+          <span class="command"><strong>SUBSTRUCT_ATOM_IDS(<em class="replaceable"><code>query_smarts</code></em>,<em class="replaceable"><code>reference_obmol</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>SUBSTRUCT_ATOM_IDS()</strong></span> returns the atom ids
+          of a <span class="emphasis"><em>reference_obmol</em></span> molecule that are
+          contained in substructures matching a
+          <span class="emphasis"><em>query_smarts</em></span> fragment. The first argument
+          is a SMARTS string, whereas the second argument is a
+          serialized OBMol object. The second argument type is generated
+          by the
+          <a class="xref" href="ch03s02.html#MOLECULE_TO_SERIALIZEDOBMOL">MOLECULE_TO_SERIALIZEDOBMOL()</a>
+          function. If a <span class="emphasis"><em>reference_obmol</em></span> molecule
+          contains several fragments matching a
+          <span class="emphasis"><em>query_smarts</em></span> fragment, a list of items is
+          returned. Each item contains a fragment's atom ids and is
+          separated from the next item by a semicolon character.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT SUBSTRUCT_ATOM_IDS('C(=O)',<em class="replaceable"><code>serializedobmol_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2 3 ;
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            If the function encounter an error, it returns NULL.
+          </p></div></li><li class="listitem"><p><a id="SUBSTRUCT_COUNT"></a>
+          <span class="command"><strong>SUBSTRUCT_COUNT(<em class="replaceable"><code>query_smarts</code></em>,<em class="replaceable"><code>reference_obmol</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>SUBSTRUCT_COUNT()</strong></span> returns the number of
+          <span class="emphasis"><em>query_smarts</em></span> fragments founded in a
+          <span class="emphasis"><em>reference_obmol</em></span> molecule. The first
+          argument is a SMARTS string, whereas the second argument is a
+          serialized OBMol object. The second argument type is generated
+          by the
+          <a class="xref" href="ch03s02.html#MOLECULE_TO_SERIALIZEDOBMOL">MOLECULE_TO_SERIALIZEDOBMOL()</a>
+          function.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT SUBSTRUCT_COUNT('C(=O)',<em class="replaceable"><code>serializedobmol_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            If the function encounter an error, it returns NULL.
+          </p></div></li><li class="listitem"><p><a id="TANIMOTO"></a>
+          <span class="command"><strong>TANIMOTO(<em class="replaceable"><code>first_fingerprint</code></em>,<em class="replaceable"><code>second_fingerprint</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>TANIMOTO()</strong></span> returns the tanimoto coefficient
+          between two fingerprints. Fingerprints are bit patterns and
+          can be generated with the
+          <a class="xref" href="ch03s02.html#FINGERPRINT">FINGERPRINT()</a>
+          function. The return value is comprised between 0 and 1. The
+          higher the tanimoto coefficient is, the more the molecules are
+          similar.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT TANIMOTO(<em class="replaceable"><code>molecule_fp</code></em>,<em class="replaceable"><code>fp_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 0.8934
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            The use of another Mychem functions (like
+            <a class="xref" href="ch03s02.html#FINGERPRINT">FINGERPRINT()</a>
+            or
+            <a class="xref" href="ch03s02.html#FINGERPRINT2">FINGERPRINT2()</a>)
+            within the
+            <a class="xref" href="ch03s05.html#TANIMOTO">TANIMOTO()</a>
+            function makes the query slower. In order to get the best
+            performance, you should use the <span class="command"><strong>SET</strong></span>
+            function of MySQL:
+          </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SET @fp = (SELECT FINGERPRINT2(</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>SMILES_TO_MOLECULE('C(C(=O)O)N')));</code></strong>
+<code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT id FROM <em class="replaceable"><code>tbl_name</code></em> WHERE TANIMOTO(@fp,<em class="replaceable"><code>fp_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> &gt; 0.7;</code></strong>
+        -&gt; <em class="replaceable"><code>list of id</code></em>
+</pre></div></li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s06.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.4. Modification Commands </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.6. Property Commands</td></tr></table></div></body></html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.4. Modification Commands</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="ch03.html" title="Chapter 3. Command Reference" /><link rel="prev" href="ch03s03.html" title="3.3. Helper Commands" /><link rel="next" href="ch03s05.html" title="3.5. Molmatch Commands" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.4. Modification Commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Command Reference</th><td width="20%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="modification-commands"></a>3.4. Modification Commands</h2></div></div></div><p>
+      This section describes <span class="emphasis"><em>modification</em></span> functions
+      that modify chemical structures. The following functions are fully
+      working starting on version 0.6.0 of Mychem.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+        If a function of this section fails, it returns an empty string.
+      </p></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a id="ADD_HYDROGENS"></a>
+          <span class="command"><strong>ADD_HYDROGENS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>ADD_HYDROGENS()</strong></span> adds hydrogens to a
+          <span class="emphasis"><em>molecule</em></span> (makes explicit the hydrogen
+          atoms).
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT ADD_HYDROGENS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809242D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="REMOVE_HYDROGENS"></a>
+          <span class="command"><strong>REMOVE_HYDROGENS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>REMOVE_HYDROGENS()</strong></span> removes the hydrogens
+          from a <span class="emphasis"><em>molecule</em></span> (makes implicit the
+          hydrogen atoms).
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT REMOVE_HYDROGENS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt;  2-Aminoacetic acid
+ OpenBabel11190809252D
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="STRIP_SALTS"></a>
+          <span class="command"><strong>STRIP_SALTS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>STRIP_SALTS()</strong></span> removes all atoms except for
+          the larger contiguous fragment.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT STRIP_SALTS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='sodium 2-aminoacetate';</code></strong>
+        -&gt;
+ OpenBabel11190812342D
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+M  CHG  1   5  -1
+M  END
+</pre></li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.3. Helper Commands </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.5. Molmatch Commands</td></tr></table></div></body></html>

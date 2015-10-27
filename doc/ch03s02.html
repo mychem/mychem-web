@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.2. Conversion Commands</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="ch03.html" title="Chapter 3. Command Reference" /><link rel="prev" href="ch03.html" title="Chapter 3. Command Reference" /><link rel="next" href="ch03s03.html" title="3.3. Helper Commands" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.2. Conversion Commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Command Reference</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="conversion-commands"></a>3.2. Conversion Commands</h2></div></div></div><p>
+      Conversion commmands permit to convert chemical data from a format
+      to another format. Mychem uses the Open Babel library for the
+      conversion, but does not implement all the 80 chemical file
+      formats supported by Open Babel. Mychem supports only few of them.
+      They are detailed in <a class="xref" href="ape.html" title="Appendix E. Molecule Formats">Appendix E, <em>Molecule Formats</em></a>.
+    </p><p>
+      To avoid having to many functions, a set of two functions is
+      available for each format:
+      <em class="replaceable"><code>FORMAT</code></em>_TO_MOLECULE and
+      MOLECULE_TO_<em class="replaceable"><code>FORMAT</code></em>. If you need other
+      formats, please request it on the
+      <a class="ulink" href="http://sourceforge.net/tracker/?group_id=195099&amp;atid=952084" target="_top">feature
+      tracker</a>.
+    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+        If a function of this section fails, it returns an empty string.
+      </p></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a id="CML_TO_MOLECULE"></a>
+          <span class="command"><strong>CML_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>CML_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in CML format to a molecule in
+          DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT CML_TO_MOLECULE(<em class="replaceable"><code>cml_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809032D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_CML"></a>
+          <span class="command"><strong>MOLECULE_TO_CML(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_CML()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in CML format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_CML(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; &lt;molecule id="id2-Aminoacetic acid"&gt;
+ &lt;name&gt;2-Aminoacetic acid&lt;/name&gt;
+ &lt;atomArray&gt;
+  &lt;atom id="a1" elementType="H" x3="-0.106800" y3="-1.052100" z3="1.150900"/&gt;
+  &lt;atom id="a2" elementType="C" x3="0.087700" y3="-0.079800" z3="0.647700"/&gt;
+  &lt;atom id="a3" elementType="H" x3="-0.287000" y3="0.708200" z3="1.333100"/&gt;
+  &lt;atom id="a4" elementType="N" x3="1.518500" y3="0.191900" z3="0.395100"/&gt;
+  &lt;atom id="a5" elementType="H" x3="2.016800" y3="0.126600" z3="1.256800"/&gt;
+  &lt;atom id="a6" elementType="H" x3="1.889000" y3="-0.469300" z3="-0.254400"/&gt;
+  &lt;atom id="a7" elementType="C" x3="-0.677500" y3="-0.076700" z3="-0.657800"/&gt;
+  &lt;atom id="a8" elementType="O" x3="-0.445500" y3="-0.696800" z3="-1.679800"/&gt;
+  &lt;atom id="a9" elementType="O" x3="-1.785100" y3="0.699100" z3="-0.670500"/&gt;
+  &lt;atom id="a10" elementType="H" x3="-2.210100" y3="0.648900" z3="-1.521200"/&gt;
+ &lt;/atomArray&gt;
+ &lt;bondArray&gt;
+  &lt;bond atomRefs2="a1 a2" order="1"/&gt;
+  &lt;bond atomRefs2="a2 a3" order="1"/&gt;
+  &lt;bond atomRefs2="a2 a4" order="1"/&gt;
+  &lt;bond atomRefs2="a2 a7" order="1"/&gt;
+  &lt;bond atomRefs2="a4 a5" order="1"/&gt;
+  &lt;bond atomRefs2="a4 a6" order="1"/&gt;
+  &lt;bond atomRefs2="a7 a8" order="2"/&gt;
+  &lt;bond atomRefs2="a7 a9" order="1"/&gt;
+  &lt;bond atomRefs2="a9 a10" order="1"/&gt;
+ &lt;/bondArray&gt;
+&lt;/molecule&gt;
+</pre></li><li class="listitem"><p><a id="FINGERPRINT"></a>
+          <span class="command"><strong>FINGERPRINT(<em class="replaceable"><code>molecule</code></em>,<em class="replaceable"><code>type</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>FINGERPRINT()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          fingerprint. The fingerprint type is specified by the second
+          argument (FP2, FP3 or FP4). The SQL type of the converted
+          molecule is a binary string for all kinds of fingerprint.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT FINGERPRINT(<em class="replaceable"><code>molecule_col</code></em>,"FP2") FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint (type FP2)</code></em>
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Tanimoto scoring can be improved by using a concatenation of
+            different fingerprint types. The concatenation of
+            fingerprints can be performed with the following query:
+          </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT CONCAT(FINGERPRINT(<em class="replaceable"><code>molecule_col</code></em>,"FP2"),</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FINGERPRINT(<em class="replaceable"><code>molecule_col</code></em>,"FP3")) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE id=9;</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint (type FP2 + type FP3)</code></em>
+</pre></div></li><li class="listitem"><p><a id="FINGERPRINT2"></a>
+          <span class="command"><strong>FINGERPRINT2(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>FINGERPRINT2()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a FP2
+          fingerprint. The SQL type of FP2 fingerprints is a binary
+          string.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT FINGERPRINT2(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint (type FP2)</code></em>
+</pre></li><li class="listitem"><p><a id="FINGERPRINT3"></a>
+          <span class="command"><strong>FINGERPRINT3(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>FINGERPRINT3()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a FP3
+          fingerprint. The SQL type of FP3 fingerprints is a binary
+          string.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT FINGERPRINT3(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint (type FP3)</code></em>
+</pre></li><li class="listitem"><p><a id="FINGERPRINT4"></a>
+          <span class="command"><strong>FINGERPRINT4(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>FINGERPRINT4()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a FP4
+          fingerprint. The SQL type of FP4 fingerprints is a binary
+          string.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT FINGERPRINT4(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; <em class="replaceable"><code>binary fingerprint (type FP4)</code></em>
+</pre></li><li class="listitem"><p><a id="INCHI_TO_MOLECULE"></a>
+          <span class="command"><strong>INCHI_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>INCHI_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in InChI format to a molecule in
+          DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT INCHI_TO_MOLECULE(<em class="replaceable"><code>inchi_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 
+ OpenBabel11190809142D
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_INCHI"></a>
+          <span class="command"><strong>MOLECULE_TO_INCHI(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_INCHI</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in InChI format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_INCHI(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; InChI=1S/C2H5NO2/c3-1-2(4)5/h1,3H2,(H,4,5)
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            The
+            <a class="xref" href="ch03s03.html#INCHI_VERSION">INCHI_VERSION()</a>
+            function permit to know which version of the InChI library
+            is used.
+          </p></div></li><li class="listitem"><p><a id="MOL2_TO_MOLECULE"></a>
+          <span class="command"><strong>MOL2_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOL2_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in Sybyl Mol2 format to a
+          molecule in DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOL2_TO_MOLECULE(<em class="replaceable"><code>mol2_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809032D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_MOL2"></a>
+          <span class="command"><strong>MOLECULE_TO_MOL2(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_MOL2()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in Sybyl Mol2 format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_MOL2(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt;@&lt;TRIPOS&gt;MOLECULE
+2-Aminoacetic acid
+ 10 9 0 0 0
+SMALL
+GASTEIGER
+
+@&lt;TRIPOS&gt;ATOM
+      1 HA1        -0.1068   -1.0521    1.1509 H       1  GLY1        0.0537
+      2 CA          0.0877   -0.0798    0.6477 C.3     1  GLY1        0.0918
+      3 HA2        -0.2870    0.7082    1.3331 H       1  GLY1        0.0537
+      4 N           1.5185    0.1919    0.3951 N.3     1  GLY1       -0.3209
+      5 H1          2.0168    0.1266    1.2568 H       1  GLY1        0.1187
+      6 H2          1.8890   -0.4693   -0.2544 H       1  GLY1        0.1187
+      7 C          -0.6775   -0.0767   -0.6578 C.2     1  GLY1        0.3185
+      8 O          -0.4455   -0.6968   -1.6798 O.2     1  GLY1       -0.2496
+      9 OXT        -1.7851    0.6991   -0.6705 O.3     1  GLY1       -0.4797
+     10 HXT        -2.2101    0.6489   -1.5212 H       1  GLY1        0.2951
+@&lt;TRIPOS&gt;BOND
+     1     1     2    1
+     2     2     3    1
+     3     2     4    1
+     4     2     7    1
+     5     4     5    1
+     6     4     6    1
+     7     7     8    2
+     8     7     9    1
+     9     9    10    1
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_MOLECULE"></a>
+          <span class="command"><strong>MOLECULE_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in the old DEFAULT_TYPE format
+          (InChI) to a molecule in the current DEFAULT_TYPE format (MDL
+          Molfile). This function is useful when updating a database
+          with a new version of Mychem.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_MOLECULE(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 
+ OpenBabel11190809092D
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_SERIALIZEDOBMOL"></a>
+          <span class="command"><strong>MOLECULE_TO_SERIALIZEDOBMOL(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_SERIALIZEDOBMOL()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          serialized OBMol object. The SQL type of the serialized object
+          is a binary string.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_SERIALIZEDOBMOL(<em class="replaceable"><code>molecule_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; <em class="replaceable"><code>binary string</code></em>
+</pre></li><li class="listitem"><p><a id="MOLFILE_TO_MOLECULE"></a>
+          <span class="command"><strong>MOLFILE_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLFILE_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in MDL Molfile (V2000) format to
+          a molecule in DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLFILE_TO_MOLECULE(<em class="replaceable"><code>molfile_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel12091111263D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_MOLFILE"></a>
+          <span class="command"><strong>MOLECULE_TO_MOLFILE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_MOLFILE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in MDL Molfile (V2000) format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_MOLFILE(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809062D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  5  4  0  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="PDB_TO_MOLECULE"></a>
+          <span class="command"><strong>PDB_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>PDB_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in PDB format to a molecule in
+          DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT PDB_TO_MOLECULE(<em class="replaceable"><code>pdb_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='1CRN';</code></strong>
+        -&gt;
+ OpenBabel08210907243D
+
+327337  0  0  0  0  0  0  0  0999 V2000
+   17.0470   14.0990    3.6250 N   0  0  0  0  0
+   16.9670   12.7840    4.3380 C   0  0  0  0  0
+   15.6850   12.7550    5.1330 C   0  0  0  0  0
+   15.2680   13.8250    5.5940 O   0  0  0  0  0
+   18.1700   12.7030    5.3370 C   0  0  0  0  0
+   19.3340   12.8290    4.4630 O   0  0  0  0  0
+   18.1500   11.5460    6.3040 C   0  0  0  0  0
+   15.1150   11.5550    5.2650 N   0  0  0  0  0
+   13.8560   11.4690    6.0660 C   0  0  0  0  0
+   14.1640   10.7850    7.3790 C   0  0  0  0  0
+   14.9930    9.8620    7.4430 O   0  0  0  0  0
+   12.7320   10.7110    5.2610 C   0  0  0  0  0
+   13.3080    9.4390    4.9260 O   0  0  0  0  0
+   12.4840   11.4420    3.8950 C   0  0  0  0  0
+   13.4880   11.2410    8.4170 N   0  0  0  0  0
+   13.6600   10.7070    9.7870 C   0  0  0  0  0
+   12.2690   10.4310   10.3230 C   0  0  0  0  0
+   11.3930   11.3080   10.1850 O   0  0  0  0  0
+   14.3680   11.7480   10.6910 C   0  0  0  0  0
+   15.8850   12.4260   10.0160 S   0  0  0  0  0
+   12.0190    9.2720   10.9280 N   0  0  0  0  0
+   10.6460    8.9910   11.4080 C   0  0  0  0  0
+   10.6540    8.7930   12.9190 C   0  0  0  0  0
+   11.6590    8.2960   13.4910 O   0  0  0  0  0
+   10.0570    7.7520   10.6820 C   0  0  0  0  0
+    9.8370    8.0180    8.9040 S   0  0  0  0  0
+    9.5610    9.1080   13.5630 N   0  0  0  0  0
+    9.4480    9.0340   15.0120 C   0  0  0  0  0
+    9.2880    7.6700   15.6060 C   0  0  0  0  0
+...
+</pre></li><li class="listitem"><p><a id="SMILES_TO_MOLECULE"></a>
+          <span class="command"><strong>SMILES_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>SMILES_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in SMILES format to a molecule
+          in DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT SMILES_TO_MOLECULE(<em class="replaceable"><code>smiles_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 
+ OpenBabel11190809142D
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_SMILES"></a>
+          <span class="command"><strong>MOLECULE_TO_SMILES(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_SMILES</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to
+          molecule in SMILES format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_SMILES(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; C(C(=O)O)N
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            If you need a single canonical form for any particular
+            molecule, regardless of atom order, the use of the
+            <a class="xref" href="ch03s02.html#MOLECULE_TO_CANONICAL_SMILES">MOLECULE_TO_CANONICAL_SMILES()</a>
+            function should be preferred.
+          </p></div></li><li class="listitem"><p><a id="MOLECULE_TO_CANONICAL_SMILES"></a>
+          <span class="command"><strong>MOLECULE_TO_CANONICAL_SMILES(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_CANONICAL_SMILES</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in Canonical SMILES format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_CANONICAL_SMILES(<em class="replaceable"><code>molecule_col</code></em>)</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>FROM <em class="replaceable"><code>tbl_name</code></em> WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; NCC(=O)O
+</pre></li><li class="listitem"><p><a id="V3000_TO_MOLECULE"></a>
+          <span class="command"><strong>V3000_TO_MOLECULE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>V3000_TO_MOLECULE()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in MDL Molfile (V3000) format to
+          a molecule in DEFAULT_TYPE format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT V3000_TO_MOLECULE(<em class="replaceable"><code>V3000_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809082D
+
+ 10  9  0  0  0  0  0  0  0  0999 V2000
+   -0.1068   -1.0521    1.1509 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0877   -0.0798    0.6477 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870    0.7082    1.3331 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.5185    0.1919    0.3951 N   0  0  0  0  0  0  0  0  0  0  0  0
+    2.0168    0.1266    1.2568 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.8890   -0.4693   -0.2544 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6775   -0.0767   -0.6578 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4455   -0.6968   -1.6798 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7851    0.6991   -0.6705 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2101    0.6489   -1.5212 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  END
+</pre></li><li class="listitem"><p><a id="MOLECULE_TO_V3000"></a>
+          <span class="command"><strong>MOLECULE_TO_V3000(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLECULE_TO_V3000()</strong></span> converts a
+          <span class="emphasis"><em>molecule</em></span> in DEFAULT_TYPE format to a
+          molecule in MDL Molfile (V3000) format.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLECULE_TO_V3000(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2-Aminoacetic acid
+ OpenBabel11190809132D
+  0  0  0     0  0            999 V3000
+
+M  V30 BEGIN CTAB
+M  V30 COUNTS 10 9 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 H -0.1068 -1.0521 1.1509 0
+M  V30 2 C 0.0877 -0.0798 0.6477 0
+M  V30 3 H -0.287 0.7082 1.3331 0
+M  V30 4 N 1.5185 0.1919 0.3951 0
+M  V30 5 H 2.0168 0.1266 1.2568 0
+M  V30 6 H 1.889 -0.4693 -0.2544 0
+M  V30 7 C -0.6775 -0.0767 -0.6578 0
+M  V30 8 O -0.4455 -0.6968 -1.6798 0
+M  V30 9 O -1.7851 0.6991 -0.6705 0
+M  V30 10 H -2.2101 0.6489 -1.5212 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 1 1 2
+M  V30 2 1 2 3
+M  V30 3 1 2 4
+M  V30 4 1 2 7
+M  V30 5 1 4 5
+M  V30 6 1 4 6
+M  V30 7 2 7 8
+M  V30 8 1 7 9
+M  V30 9 1 9 10
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+</pre></li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. Command Reference </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 3.3. Helper Commands</td></tr></table></div></body></html>

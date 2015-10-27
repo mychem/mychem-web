@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>A.3. Compilation and Installation</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="apa.html" title="Appendix A. Installation" /><link rel="prev" href="apas02.html" title="A.2. Requirements" /><link rel="next" href="apas04.html" title="A.4. Mychem API" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">A.3. Compilation and Installation</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="apas02.html">Prev</a> </td><th width="60%" align="center">Appendix A. Installation</th><td width="20%" align="right"> <a accesskey="n" href="apas04.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="compilation"></a>A.3. Compilation and Installation</h2></div></div></div><p>
+      This section describes the compilation of Mychem's source files
+      for GNU/Linux, Mac OS X and Microsoft Windows.
+    </p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="linux_installation"></a>A.3.1. Compiling and Installing Mychem on GNU/Linux</h3></div></div></div><p>
+        This section contains the compilation and installation
+        instructions for Mychem on GNU/Linux.
+      </p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="linux_standard_installation"></a>A.3.1.1. Standard Installation on GNU/Linux</h4></div></div></div><p>
+          This section describes the standard way to compile and install
+          Mychem on GNU/Linux. You have to check that the header files
+          for the MySQL library and the Open Babel library are installed
+          on your workstation. If they are not installed, the CMake
+          software will raise an error when generating the Makefile.
+          First, extract the appropriate source package. If you are
+          using a command line interface, follow this instructions:
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              For the tar gzipped archive:
+            </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>tar -xfzv mychem-0.9.3.tar.gz</code></strong>
+</pre></li><li class="listitem"><p>
+              For the zip archive:
+            </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>unzip mychem-0.9.3.zip</code></strong>
+</pre></li></ul></div><p>
+          CMake can build the libraries and executables into any
+          directory. If the directory contains the source, the build is
+          called <span class="emphasis"><em>in source</em></span>. In other cases, it is
+          called <span class="emphasis"><em>out of source</em></span>. CMake strongly
+          recommends and promotes building out of source.
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              In source build:
+            </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>cd mychem-0.9.3</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cmake .</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make install</code></strong>
+</pre></li><li class="listitem"><p>
+              Build out-of-source (recommended):
+            </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>cd mychem-0.9.3</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>mkdir build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cd build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cmake ..</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make install</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cd ..</code></strong>
+</pre></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            You may need some root privileges to run <span class="command"><strong>make
+            install</strong></span>. The default install directory is
+            <code class="filename">/usr/local/lib</code>
+            when using a version of MySQL prior to 5.1. If the MySQL
+            version is greater (or equal) to 5.1, the default install
+            directory is
+            <code class="filename">/usr/lib/mysql/plugin</code>.
+          </p></div><p>
+          Once the library is installed, the SQL functions are created
+          with the following command:
+        </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>mysql -u user -p &lt; src/mychemdb.sql</code></strong>
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            On Mac OS X and Windows, another SQL file is used instead
+            of the <code class="filename">src/mychemdb.sql</code> file. The name
+            of this file is detailed in the corresponding OS section.
+          </p></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="linux_customized_installation"></a>A.3.1.2. Customized Installation</h4></div></div></div><p>
+          You can customized the build and installation process by
+          modifying CMake arguments. For example, if you want to change
+          the path of the installation directory:
+        </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>cd /path/to/mychem/build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cmake -DCMAKE_INSTALL_PREFIX=/convenient/path ..</code></strong>
+</pre><p>
+          If you want to have more details about the compilation
+          process, use the following option for the
+          <span class="command"><strong>make</strong></span> command:
+        </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>make VERBOSE=1</code></strong>
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="linux_tests"></a>A.3.1.3. Testing the installation</h4></div></div></div><p>
+          Since v0.5, Mychem includes a test suite. To build and use
+          these programs, you have to set the MySQL connection settings
+          and run the tests. The following example builds Mychem
+          out-of-source and enables testing.
+        </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>cd mychem-0.9.3</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>mkdir build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cd build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cmake -DMY_HOST=localhost -DMY_USER=user -DMY_PASSWD=passwd ..</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>make install</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cd ..</code></strong>
+</pre><p>
+          When running the command <span class="command"><strong>cmake -DMY_HOST=localhost
+          -DMY_USER=user -DMY_PASSWD=passwd ..</strong></span>, you will see
+          the following line in the status message:
+        </p><pre class="screen">-- Test module enabled
+</pre><p>
+          The program use the <span class="emphasis"><em>mysql</em></span> database for
+          testing. If the <span class="emphasis"><em>user</em></span> do not have access
+          to this database, it is possible to set the name of the
+          database by using the -DMY_DB option.
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            If the user can access <span class="application">MySQL</span>
+            without a password, then you do not need to set the
+            <code class="option">MY_PASSWD</code> parameter. The two other
+            parameters ( <code class="option">MY_HOST</code> and
+            <code class="option">MY_USER</code>) are mandatory.
+          </p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            The password is not stored in a safe location. If you are
+            doing tests on a critical server, please use directly the
+            test executables and do not use the CMake facility to
+            perform the tests ! You can find the test executables in the
+            <code class="filename">/path/to/mychem/build/tests</code>
+            directory.
+          </p></div><p>
+          To run the tests, use the command <span class="command"><strong>make
+          test</strong></span>. You should see the following results:
+        </p><pre class="screen">Running tests...
+Test project mychem-code/build
+    Start 1: ConversionTest
+1/5 Test #1: ConversionTest ...................   Passed    0.05 sec
+    Start 2: HelperTest
+2/5 Test #2: HelperTest .......................   Passed    0.00 sec
+    Start 3: ModificationTest
+3/5 Test #3: ModificationTest .................   Passed    0.01 sec
+    Start 4: MolmatchTest
+4/5 Test #4: MolmatchTest .....................   Passed    0.04 sec
+    Start 5: PropertyTest
+5/5 Test #5: PropertyTest .....................   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   0.14 sec
+</pre><p>
+          The <code class="filename">LastTest.log</code> file contains more
+          details about the test results. It can be found in the
+          <code class="filename">/path/to/mychem/build/Testing/Temporary</code>
+          directory.
+        </p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="linux_installation_troubleshooting"></a>A.3.1.4. Installation Troubleshooting</h4></div></div></div><p>
+          Building your application can raise some errors:
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              If CMake returns the following error:
+            </p><pre class="screen">CMake Error: This project requires some variables
+to be set, and cmake can not find them. Please set the following
+variables: OPENBABEL2_INCLUDE_DIR (ADVANCED) OPENBABEL2_LIBRARIES
+(ADVANCED)
+</pre><p>
+              It means that CMake did not find Open Babel. If you know
+              where Open Babel is installed on your system, you can tell
+              it to CMake with:
+            </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>cd /path/to/mychem-0.9.3/build</code></strong>
+<code class="prompt"># </code><strong class="userinput"><code>cmake -DOPENBABEL2_INCLUDE_DIR=/path/to/openbabel/include \
+-DOPENBABEL2_LIBRARIES=/path/to/library ..</code></strong>
+</pre></li></ul></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="macosx_installation"></a>A.3.2. Installing Mychem on Mac OS X</h3></div></div></div><p>
+        The installation on Mac OS X differs slightly from an
+        installation on GNU/linux. First, you have to set some
+        parameters for CMake. The following list shows common values
+        used when compiling Mychem on Mac OS X. Note that these values
+        may differ on your system.
+      </p><div class="variablelist"><p class="title"><strong>CMake Parameters for Mac OS X Builds</strong></p><dl class="variablelist"><dt><span class="term">OPENBABEL2_INCLUDE_DIR</span></dt><dd><p>
+              /usr/local/include/openbabel-2.0
+            </p></dd><dt><span class="term">OPENBABEL2_LIBRARIES</span></dt><dd><p>
+              /usr/local/lib/libopenbabel.dylib
+            </p></dd><dt><span class="term">MYSQL_INCLUDE_DIR</span></dt><dd><p>
+              /Library/MySQL/include/mysql
+            </p><p>
+              /Applications/MAMP/Library/include/mysql
+            </p></dd><dt><span class="term">MYSQL_LIBRARIES</span></dt><dd><p>
+              /Library/MySQL/lib/mysql/libmysqlclient.dylib
+            </p><p>
+              /Applications/MAMP/Library/lib/mysql/libmysqlclient.dylib
+            </p></dd></dl></div><p>
+        Once the library is installed, the SQL functions are created
+        with the following command:
+      </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>mysql -u user -p &lt; src/mychemdb_macosx.sql</code></strong>
+</pre><p>
+        When executing the previous command, you can have the following
+        problem:
+      </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code> mysql -u root -p &lt; src/mychemdb_macosx.sql</code></strong>
+Enter password:
+ERROR 1126 (HY000) at line 10: Can't open shared library 'libmychem.dylib'
+  (errno: 2 dlopen(/usr/local/mysql/lib/plugin/libmychem.dylib, 2): Library
+  not loaded: libmysqlclient.18.dylib
+  Referenced from: /usr/local/m)
+</pre><p>
+        This problem can be fixed by modifying the libmychem.dylib
+        shared library so that all dependent libraries contain the
+        correct path information:
+      </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>otool -L libmychem.dylib</code></strong>
+libmychem.dylib:
+        /usr/local/lib/libmychem.0.dylib (compatibility version 0.0.0, current
+        version 0.9.3)
+        /usr/local/lib/libopenbabel.4.dylib (compatibility version 4.0.0,
+        current version 4.0.1)
+        libmysqlclient.18.dylib (compatibility version 18.0.0, current version
+        18.0.0)
+        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current
+        version 159.1.0)
+        /usr/lib/libstdc++.6.dylib (compatibility version 7.0.0, current
+        version 52.0.0)
+<code class="prompt"># </code><strong class="userinput"><code>sudo find / -name 'libmysqlclient.18.dylib' -print</code></strong>
+Password:
+/usr/local/mysql-5.5.24-osx10.6-x86_64/lib/libmysqlclient.18.dylib
+<code class="prompt"># </code><strong class="userinput"><code>sudo install_name_tool -change libmysqlclient.18.dylib \
+ /usr/local/mysql-5.5.24-osx10.6-x86_64/lib/libmysqlclient.18.dylib \
+ libmychem.dylib</code></strong>
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="win32_installation"></a>A.3.3. Installing Mychem on Microsoft Windows</h3></div></div></div><p>
+        This section describes contains the installation of Mychem on
+        Microsoft Windows.
+      </p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="win32_msvc_installation"></a>A.3.3.1. Installation using Microsoft Visual Studio Express 2005</h4></div></div></div><p>
+          You can compile <span class="application">Mychem</span> with
+          <span class="application">Microsoft Visual C++ 2005 Express
+          Edition</span> (
+
+          <acronym class="acronym">MSVC++</acronym>
+
+          ). This software can be downloaded from the
+          <a class="ulink" href="http://www.microsoft.com/express/2005/" target="_top">Microsoft
+          MSDN Website</a>. To complete the Microsoft Visual C++
+          software, install the SDK Platform. The instruction are given
+          in the following
+          <a class="ulink" href="http://msdn2.microsoft.com/en-us/library/ms235626(VS.80).aspx" target="_top">article</a>.
+          The MySQL package for Windows contains all required libraries
+          and include files for building Mychem. However, Open Babel
+          does not provide such a package. You have to compile Open
+          Babel. It can easily be done with
+
+          <acronym class="acronym">MSVC++</acronym>
+
+          and by following the instructions detailed on the
+          <a class="ulink" href="http://openbabel.org/wiki/Install_%28MSVC%29" target="_top">Open
+          Babel Website</a>. The following libraries are necessary
+          for the build of Open Babel. They can be downloaded from the
+          <a class="ulink" href="http://www.zlatkovic.com/pub/libxml" target="_top">Maintainer's
+          Home Page</a> of the libxml2 Windows port.
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              iconv
+            </p></li><li class="listitem"><p>
+              libxml2
+            </p></li><li class="listitem"><p>
+              zlib
+            </p></li></ul></div><p>
+          Once your compilation environment is ready, you can generate
+          the
+
+          <acronym class="acronym">MSVC++</acronym>
+
+          project file with CMake. Launch the CMake GUI and set up the
+          source code directory and the build directory for the
+          binaries.
+        </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/cmake1.png" align="middle" alt="CMake Screenshot 1" /><div class="caption"><p>
+                Setting the source code and the build directory with the
+                CMake utility.
+              </p></div></div></div><p>
+          Then, click on <span class="guibutton">Configure</span>. A window will
+          appear to let you select what build system you want CMake to
+          generate files for. Choose Visual Studio 8 2005 and click on
+          <span class="guibutton">Ok</span>. After some processing, CMake will
+          raise an error window, telling you that some variables are not
+          founded. You will have to set it manually. Press twice the
+          <span class="guibutton">Ok</span> button. Click on the <span class="guilabel">Show
+          Advanced Values</span> checkbox to display the full list
+          of parameters. Find the lines with OPENBABEL2_INCLUDE_DIR,
+          OPENBABEL2_LIBRARIES, MYSQL_INCUDE_DIR, MYSQL_LIBRARIES
+          values. These lines are at the end of the list.
+        </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/cmake2.png" align="middle" alt="CMake Screenshot 2" /><div class="caption"><p>
+                At the end of the value list, you have to set up some
+                parameters.
+              </p></div></div></div><p>
+          You have to set OPENBABEL2_INCLUDE_DIR to the directory
+          <code class="filename">include</code> contained in
+          the Open Babel source directory (i.e.,
+          <code class="filename">C:/path/to/openbabel/include</code>)
+          and OPENBABEL2_LIBRARIES to the file named
+          <code class="filename">OpenBabelDLLD.lib</code> (the library should be
+          located in the
+          <code class="filename">C:/path/to/openbabel/windows-vc2005/OpenBabelDLL/Debug</code>
+          directory).
+        </p><p>
+          The MYSQL_INCLUDE_DIR and MYSQL_LIBRARIES parameters should be
+          respectively set to <code class="filename">C:\Program
+          Files\MySQL\MySQL Server X.Y\include</code> and
+          <code class="filename">C:\Program Files\MySQL\MySQL Server
+          X.Y\opt\libmysql.lib</code>, where X.Y is the version of
+          <span class="application">MySQL</span>.
+        </p><p>
+          Once the values are set, click on
+          <span class="guibutton">Configure</span> and then on
+          <span class="guibutton">Ok</span>. CMake generates the MSVC++ project
+          file (<code class="filename">mychem.sln</code>) and exit.
+        </p><div class="screenshot"><div class="mediaobject" align="center"><img src="images/cmake3.png" align="middle" alt="CMake Screenshot 3" /><div class="caption"><p>
+                All required values are filled. CMake is ready to
+                generate the
+
+                <acronym class="acronym">MSVC++</acronym>
+
+                project file.
+              </p></div></div></div><p>
+          Once the project file is generated, open it with
+
+          <acronym class="acronym">MSVC++</acronym>
+
+          . The <code class="filename">mychem.sln</code> project file should be
+          located at
+          <code class="filename">C:/path/to/mychem/build/</code>.
+          Several modules are available for building, however, only
+          <span class="emphasis"><em>mychem-lib</em></span> is required:
+        </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+              mychem-lib
+            </p></li><li class="listitem"><p>
+              conversion_test
+            </p></li><li class="listitem"><p>
+              helper_test
+            </p></li><li class="listitem"><p>
+              modification_test
+            </p></li><li class="listitem"><p>
+              molmatch_test
+            </p></li><li class="listitem"><p>
+              property_test
+            </p></li></ul></div><p>
+          If you build the <span class="emphasis"><em>debug</em></span> version of Mychem,
+          the Mychem DLL file is located in the
+          <code class="filename">C:/path/to/mychem/build/dir/src/debug</code>
+          directory and is named <code class="filename">mychem.dll</code>. You
+          have to copy this DLL file into the MySQL
+          <code class="filename">bin</code> directory.
+          Then copy the
+          <code class="filename">C:/path/to/openbabel/windows-vc2005/OpenBabelDLL/Debug/OpenBabelDLLD.dll</code>
+          DLL file and all DLL files founded into the
+          <code class="filename">openbabel-2.3.2/windows-vc2005</code>
+          directory to the MySQL
+          <code class="filename">bin</code> directory.
+        </p><p>
+          At last, restart <span class="application">MySQL</span> and run the
+          win32 SQL script
+          <code class="filename">/path/to/mychem/src/mychemdb_win32.sql</code>.
+        </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apas02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="apa.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="apas04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">A.2. Requirements </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> A.4. Mychem API</td></tr></table></div></body></html>
