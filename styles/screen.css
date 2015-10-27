@@ -5,7 +5,7 @@ body
   background: white;
   width: 800px;
   margin: 10px auto;
-  padding: 0;
+  padding: 10px;
   border: 2px solid black;
 }
 
@@ -71,11 +71,11 @@ img
 
 a
 {
-  color: blue;
+  color: #336699;
 }
 
 a:visited
 {
-  color: red;
+  color: #663399;
 }
 
