@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Appendix C. Loading MDL SDFFile with Python</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="index.html" title="The Mychem Handbook" /><link rel="prev" href="apbs03.html" title="B.3. Other Errors" /><link rel="next" href="apd.html" title="Appendix D. Chemical Database Manager" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix C. Loading MDL SDFFile with Python</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="apbs03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="apd.html">Next</a></td></tr></table><hr /></div><div class="appendix"><div class="titlepage"><div><div><h1 class="title"><a id="sdfscript"></a>Appendix C. Loading MDL SDFFile with Python</h1></div></div></div><p>
+    This appendix presents a Python script for loading a MDL SDF file
+    into a MySQL database. The script requires the MySQLdb Python
+    module. It can be downloaded from the
+    <a class="ulink" href="http://mysql-python.sourceforge.net/" target="_top">Mysql-Python
+    Project Web Page</a>.
+  </p><pre class="programlisting">#!/bin/python
+
+import sys
+import MySQLdb
+
+
+#-----------------------------------------------------------------
+# Set some paramaters and connect to the database
+#-----------------------------------------------------------------
+
+host = "localhost" # Set the host
+username = "" # Set the username
+password = "" # Set the password
+database = "" # Set the database name
+table = "" #  Set the table name
+
+try:
+    link = MySQLdb.connect(host = host,
+                           user = username,
+                           passwd = password,
+                           db = database)
+    cursor = link.cursor()
+except MySQLdb.Error, e:
+    print "Error %d: %s" % (e.args[0], e.args[1])
+    sys.exit(1)
+
+
+#-----------------------------------------------------------------
+# Parse the file and load the structures
+#-----------------------------------------------------------------
+
+if len(sys.argv) != 2:
+    print "Usage: upload_sdf.py FILE"
+    link.close()
+    sys.exit(1)
+f_in = open(sys.argv[1], 'r')
+
+ctTable = ""
+lineCount = 0
+molCount = 0
+ctEnd = False
+
+while 1:
+    line = f_in.readline()
+    if not line:
+        break
+    lineCount += 1
+    if line[0:4] == "$$$$":
+        if name == "":
+            name = "Mol" + str(molCount)
+        query = "INSERT INTO `%s` (`name`)" % table \
+              + " VALUES ('%s')" % name
+        cursor.execute(query)
+        molid = cursor.lastrowid
+        query = "INSERT INTO `%s_mol` (`molid`, `mol`)" % table \
+              + " VALUES (%i, '%s')" % (molid, ctTable)
+        cursor.execute(query)
+        ctTable = ""
+        lineCount = 0
+        molCount += 1
+        ctEnd = False
+    elif not ctEnd:
+        ctTable += line
+        if lineCount == 1:
+            name = line.strip()
+        if line[0:6] == "M  END":
+            ctEnd = True
+
+
+#-----------------------------------------------------------------
+# Close the handlers and print a summary
+#-----------------------------------------------------------------
+
+link.commit()
+cursor.close()
+link.close()
+
+print str(molCount) + " structures have been loaded."
+</pre></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apbs03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="apd.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">B.3. Other Errors </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Appendix D. Chemical Database Manager</td></tr></table></div></body></html>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>3.6. Property Commands</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="ch03.html" title="Chapter 3. Command Reference" /><link rel="prev" href="ch03s05.html" title="3.5. Molmatch Commands" /><link rel="next" href="ch04.html" title="Chapter 4. Credits and License" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">3.6. Property Commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s05.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Command Reference</th><td width="20%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="property-commands"></a>3.6. Property Commands</h2></div></div></div><p>
+      This section describes several functions that calculate molecular
+      properties.
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><a id="EXACTMASS"></a>
+          <span class="command"><strong>EXACTMASS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>EXACTMASS()</strong></span> returns the monoisotopic
+          molecular weight of a <span class="emphasis"><em>molecule</em></span>. The
+          monoisotopic molecular weight is defined as the molecular
+          weight calculated using the mass of the most abundant isotope
+          for each element of a molecule. The unit of the return value
+          is g.mol<sup>-1</sup>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT EXACTMASS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 75.032028
+</pre></li><li class="listitem"><p><a id="IS_2D"></a>
+          <span class="command"><strong>IS_2D(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>IS_2D()</strong></span> returns 1 if a
+          <em class="replaceable"><code>molecule</code></em> has 2D coordinates.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT IS_2D(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 1
+</pre></li><li class="listitem"><p><a id="IS_3D"></a>
+          <span class="command"><strong>IS_3D(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>IS_3D()</strong></span> returns 1 if a
+          <em class="replaceable"><code>molecule</code></em> has 3D coordinates.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT IS_3D(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 1
+</pre></li><li class="listitem"><p><a id="IS_CHIRAL"></a>
+          <span class="command"><strong>IS_CHIRAL(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>IS_CHIRAL()</strong></span> returns 1 if a
+          <em class="replaceable"><code>molecule</code></em> is chiral.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT IS_CHIRAL(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2S-Butan-2-ol';</code></strong>
+        -&gt; 1
+</pre></li><li class="listitem"><p><a id="MOLFORMULA"></a>
+          <span class="command"><strong>MOLFORMULA(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLFORMULA()</strong></span> returns the molecular formula
+          of a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLFORMULA(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; C2H5NO2
+</pre></li><li class="listitem"><p><a id="MOLLOGP"></a>
+          <span class="command"><strong>MOLLOGP(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLLOGP()</strong></span> returns the LogP of a
+          <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLLOGP(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; -0.27
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Note that the result of this function is depending on the
+            hydrogen atoms. If there is any doubt on the presence of
+            hydrogen atoms in the <em class="replaceable"><code>molecule</code></em>,
+            it is recommended to use the
+            <a class="xref" href="ch03s04.html#ADD_HYDROGENS">ADD_HYDROGENS()</a>
+            function.
+          </p></div></li><li class="listitem"><p><a id="MOLMR"></a>
+          <span class="command"><strong>MOLMR(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLMR()</strong></span> returns the molar refractivity of a
+          <span class="emphasis"><em>molecule</em></span>. The unit of the return value is
+          J.mol<sup>-1</sup>.K<sup>-1</sup>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLMR(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 16.2072
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Note that the result of this function is depending on the
+            hydrogen atoms. If there is any doubt on the presence of
+            hydrogen atoms in the <em class="replaceable"><code>molecule</code></em>,
+            it is recommended to use the
+            <a class="xref" href="ch03s04.html#ADD_HYDROGENS">ADD_HYDROGENS()</a>
+            function.
+          </p></div></li><li class="listitem"><p><a id="MOLPSA"></a>
+          <span class="command"><strong>MOLPSA(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLPSA()</strong></span> returns the topological polar
+          surface area of a <em class="replaceable"><code>molecule</code></em>. The
+          unit of the return value is Å<sup>2</sup>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLPSA(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 63.32
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Note that the result of this function is depending on the
+            hydrogen atoms. If there is any doubt on the presence of
+            hydrogen atoms in the <em class="replaceable"><code>molecule</code></em>,
+            it is recommended to use the
+            <a class="xref" href="ch03s04.html#ADD_HYDROGENS">ADD_HYDROGENS()</a>
+            function.
+          </p></div></li><li class="listitem"><p><a id="MOLWEIGHT"></a>
+          <span class="command"><strong>MOLWEIGHT(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>MOLWEIGHT()</strong></span> returns the molecular weight of
+          a <span class="emphasis"><em>molecule</em></span>. The unit of the return value
+          is g.mol<sup>-1</sup>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT MOLWEIGHT(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 75.066600
+</pre></li><li class="listitem"><p><a id="NUMBER_OF_ACCEPTORS"></a>
+          <span class="command"><strong>NUMBER_OF_ACCEPTORS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_ACCEPTORS()</strong></span> returns the number of
+          hydrogen-bond acceptors in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_ACCEPTORS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 3
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Note that the result of this function is depending on the
+            hydrogen atoms. If there is any doubt on the presence of
+            hydrogen atoms in the <em class="replaceable"><code>molecule</code></em>,
+            it is recommended to use the
+            <a class="xref" href="ch03s04.html#ADD_HYDROGENS">ADD_HYDROGENS()</a>
+            function.
+          </p></div></li><li class="listitem"><p><a id="NUMBER_OF_ATOMS"></a>
+          <span class="command"><strong>NUMBER_OF_ATOMS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_ATOMS()</strong></span> returns the number of
+          atoms in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_ATOMS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 10
+</pre></li><li class="listitem"><p><a id="NUMBER_OF_BONDS"></a>
+          <span class="command"><strong>NUMBER_OF_BONDS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_BONDS()</strong></span> returns the number of
+          bonds in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_BONDS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 9
+</pre></li><li class="listitem"><p><a id="NUMBER_OF_DONORS"></a>
+          <span class="command"><strong>NUMBER_OF_DONORS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_DONORS()</strong></span> returns the numbers of
+          hydrogen-bond donors in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_DONORS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 2
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+            Note that the result of this function is depending on the
+            presence of hydrogen atoms in the
+            <em class="replaceable"><code>molecule</code></em>. If the hydrogen atoms
+            are not described by the
+            <em class="replaceable"><code>molecule</code></em>, the
+            <a class="xref" href="ch03s04.html#ADD_HYDROGENS">ADD_HYDROGENS()</a>
+            function must be used. The two following examples described
+            the effect of the ADD_HYDROGENS function:
+          </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_DONORS(</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>SMILES_TO_MOLECULE('O=C(O)CCN'));</code></strong>
+        -&gt; 0
+</pre><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_DONORS(ADD_HYDROGENS(</code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>SMILES_TO_MOLECULE('O=C(O)CCN')));</code></strong>
+        -&gt; 2
+</pre></div></li><li class="listitem"><p><a id="NUMBER_OF_HEAVY_ATOMS"></a>
+          <span class="command"><strong>NUMBER_OF_HEAVY_ATOMS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_HEAVY_ATOMS()</strong></span> returns the number
+          of heavy atoms in a <span class="emphasis"><em>molecule</em></span> (all atoms
+          except hydrogen).
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_HEAVY_ATOMS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 5
+</pre></li><li class="listitem"><p><a id="NUMBER_OF_RINGS"></a>
+          <span class="command"><strong>NUMBER_OF_RINGS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_RINGS()</strong></span> returns the number of
+          rings in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_RINGS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='adenine';</code></strong>
+        -&gt; 2
+</pre></li><li class="listitem"><p><a id="NUMBER_OF_ROTABLE_BONDS"></a>
+          <span class="command"><strong>NUMBER_OF_ROTABLE_BONDS(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>NUMBER_OF_ROTABLE_BONDS()</strong></span> returns the
+          number of rotable bonds in a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT NUMBER_OF_ROTABLE_BONDS(<em class="replaceable"><code>molecule_col</code></em>) FROM <em class="replaceable"><code>tbl_name</code></em></code></strong>
+<code class="prompt">    -&gt; </code><strong class="userinput"><code>WHERE name='2-Aminoacetic acid';</code></strong>
+        -&gt; 1
+</pre></li><li class="listitem"><p><a id="TOTAL_CHARGE"></a>
+          <span class="command"><strong>TOTAL_CHARGE(<em class="replaceable"><code>molecule</code></em>)</strong></span>
+        </p><p>
+          <span class="command"><strong>TOTAL_CHARGE()</strong></span> returns the total charge of
+          a <span class="emphasis"><em>molecule</em></span>.
+        </p><pre class="screen"><code class="prompt">mysql&gt; </code><strong class="userinput"><code>SELECT TOTAL_CHARGE(SMILES_TO_MOLECULE('NCC(=O)[O-]'));</code></strong>
+        -&gt; -1
+</pre></li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s05.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">3.5. Molmatch Commands </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. Credits and License</td></tr></table></div></body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en">
+<head>
+  <title>Mychem Home Page</title>
+  <meta name="author" content="Jerome Pansanel" />
+  <meta name="keywords" content="mychem, chemistry, open source, mysql, database, open babel, cartbridge" />
+  <meta name="description" content="The Mychem project aims to provide a complete set of functions for handling chemical data within MySQL." />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <link href="styles/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="header">
+  <img src="images/logo.png" alt="logo of Mychem" />
+  <img src="images/title.png" alt="Mychem: A chemical extension for MySQL" />
+</div>
+<div class="main">
+
+  <!-- the menu -->
+  <div class="menu">
+    <ul>
+      <li>Home</li>
+      <li>&nbsp;|&nbsp;<a href="./doc/index.html" title="Mychem documentation">Documentation</a></li>
+      <li>&nbsp;|&nbsp;<a href="./api/index.html" title="API">API</a></li>
+      <li>&nbsp;|&nbsp;<a href="http://sourceforge.net/project/showfiles.php?group_id=195099" title="Download Mychem">Download</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+  <!-- Brief presentation of the Mychem project -->
+  <h3>Brief</h3>
+  <p>
+Mychem is a chemoinformatics extension for MySQL released
+under the GNU GPL license. This extension provides a set of functions that
+permits to handle chemical data within the MySQL database. These functions
+permit you to search, analyze and convert chemical data.</p>
+<p>A <a href="http://mychem.sourceforge.net/doc/">complete documentation</a> for Mychem is available online and will provide you a good overview of its capabitilies.</p>
+
+  <!-- Last news about the project -->
+  <h3>News</h3>
+  <ul>
+    <li>2015-10-27: Mychem 0.9.3 is released</li>
+    <li>2015-01-20: Mychem sourcecode is now hosted on GitHub</li>
+    <li>2014-09-12: Mychem 0.9.2 is released</li>
+    <li>2012-02-13: Mychem 0.9.1 is released</li>
+    <li>2011-12-09: Mychem 0.9.0 is released</li>
+  </ul>
+
+  <!-- A detailled overview of the MyChem project -->
+  <h3>The Project</h3>
+  <p>
+The Mychem project aims to provide a complete set of functions for handling
+chemical data within MySQL.<sup>[<a href="#ref1">1</a>]</sup> The SQL API
+of this project aims to be so closed as possible to other projects, like
+Pgchem::tigress and Orchem. The SQL API is maintained by the ChemiSQL project.<sup>[<a href="#ref2">2</a>]</sup>
+  </p>
+  <p>
+Most of the functions depends upon Open Babel.
+<sup>[<a href="#ref3">3</a>]</sup> Open Babel is a performant toolbox for
+chemical file handling. It provides also many functions for chemical properties
+calculation (logP, PSA, ...).
+  </p>
+  <p>You can find recent update of Mychem on the
+  <a href="http://github.com/mychem/mychem-code" title="Project Homepage on GitHub">project's pages</a> (hosted on GitHub).</p>
+
+  <!-- Download area -->
+  <h3>Download</h3>
+  <p>
+The software is distributed as source code that need to be compiled.
+Installation instructions are provided in the package, and also
+<a href="./doc/apa.html" title="Installation instruction">online</a>. The compilation of the software is based on
+CMake.<sup>[<a href="#ref4">4</a>]</sup>
+  </p>
+  <p>
+The last version of Mychem can be downloaded on GitHub:
+  </p>
+<ul>
+<li><a href="http://sourceforge.net/projects/mychem/files/mychem/0.9.3/mychem-0.9.3.tgz/download" title="TGZ file">mychem-0.9.3.tgz</a></li>
+<li><a href="http://sourceforge.net/projects/mychem/files/mychem/0.9.3/mychem-0.9.3.zip/download" title="ZIP file">mychem-0.9.3.zip</a></li>
+</ul>
+<p>
+You can download previous versions on the following page:<br />
+<a href="http://sourceforge.net/project/showfiles.php?group_id=195099" title="Download Mychem">
+http://sourceforge.net/project/showfiles.php?group_id=195099
+</a>
+  </p>
+
+  <!-- The licensse -->
+  <h3>License</h3>
+  <p>Mychem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation version 2 of the License, or (at your option) any later version. Full details can be found in the <a href="https://github.com/mychem/mychem-code/blob/master/COPYING" title="COPYING file">COPYING file</a>.
+
+  <!-- Useful references for the MyChem project -->
+  <h3>References</h3>
+  <ol>
+    <li><a name="ref1"></a><a href="http://www.mysql.com/" title="MySQL Home Page">MySQL</a> - A popular Open
+Source database.</li>
+    <li><a name="ref2"></a><a href="http://chemdb.sourceforge.net/wiki/index.php/Main_Page" title="ChemiSQL">ChemiSQL</a> - A
+project that federate several Open Source chemical cartridge projects.</li>
+    <li><a name="ref3"></a><a href="http://openbabel.sourceforge.net/wiki/Main_Page" title="Open Babel Home Page">
+Open Babel</a> - The Open Source Chemistry Toolbox.</li>
+    <li><a name="ref4"></a><a href="http://www.cmake.org" title="CMake Home Page">CMake</a> - A powerful tool for
+building an application.</li>
+  </ol>
+  </div>
+</div>
+
+<div class="footer">
+<a href="http://www.alchem.org/"><img src="images/alchemlogo.png" alt="Header image"/></a>
+<a href="http://www.blueobelisk.org/"><img src="images/bologo.png" alt="Header image"/></a>
+<a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=169897&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://sourceforge.net/apps/piwik/mychem/" : "http://sourceforge.net/apps/piwik/mychem/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://sourceforge.net/apps/piwik/mychem/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
+<!-- End Piwik Tag -->
+</body>
+</html>

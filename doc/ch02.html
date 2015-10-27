@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 2. Using Mychem</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="index.html" title="The Mychem Handbook" /><link rel="prev" href="ch01s03.html" title="1.3. Open Babel" /><link rel="next" href="ch02s02.html" title="2.2. Examples" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 2. Using Mychem</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s02.html">Next</a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="using-mychem"></a>Chapter 2. Using Mychem</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="sect1"><a href="ch02.html#database">2.1. The Database</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch02.html#script_database_creation">2.1.1. Database Creation with SQL and Python Scripts</a></span></dt><dt><span class="sect2"><a href="ch02.html#mychemdb_manager_database_creation">2.1.2. Database creation with <code class="filename">mychemdb-manager.py</code></a></span></dt></dl></dd><dt><span class="sect1"><a href="ch02s02.html">2.2. Examples</a></span></dt><dd><dl><dt><span class="sect2"><a href="ch02s02.html#calculate.molweight">2.2.1. Calculate the Molecular Weight</a></span></dt><dt><span class="sect2"><a href="ch02s02.html#search.substructure">2.2.2. Search a Substructure</a></span></dt></dl></dd></dl></div><p>
+    This chapter provides a short tutorial on the usage of Mychem. It
+    will present you a simple way to create a chemical database with
+    Mychem and how to use some functions. More details about each
+    function used in this tutorial are available in the
+    <a class="xref" href="ch03.html" title="Chapter 3. Command Reference">Chapter 3, <em>Command Reference</em></a>.
+  </p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="database"></a>2.1. The Database</h2></div></div></div><p>
+      A chemical database is composed of one or several tables. The
+      following example use a set of four tables, however the use of one
+      table can be sufficient when working with small databases.
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          <span class="emphasis"><em>compounds</em></span> - a table containing an unique
+          id for each molecule and its name.
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>1D_structures</em></span> - a table containing an
+          unique reference to the <span class="emphasis"><em>compounds</em></span> table
+          and several types of 1D molecular descriptors (InChI code and
+          SMILES).
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>3D_structures</em></span> - a table containing an
+          unique reference to the <span class="emphasis"><em>compounds</em></span> table
+          and the 3D structure in MDL Molfile format.
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>bin_structures</em></span> - a table containing an
+          unique reference to the <span class="emphasis"><em>compounds</em></span> table
+          and several types of binary descriptors (fingerprints and
+          serialized OBMol object).
+        </p></li></ul></div><p>
+      This section describes two ways to create and fill these tables.
+      It can be done manually by using SQL and Python scripts, or by
+      using the <code class="filename">mychemdb-manager.py</code> program
+      provided with Mychem.
+    </p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="script_database_creation"></a>2.1.1. Database Creation with SQL and Python Scripts</h3></div></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="idp43072304"></a>2.1.1.1. Table Set Creation</h4></div></div></div><p>
+          The structure of the database can be created with the
+          following SQL code:
+        </p><pre class="programlisting">--
+-- The 'mychem' database name is provided as example. You can
+-- choose any other existing database.
+--
+
+CREATE DATABASE `mychem`;
+USE mychem;
+
+
+--
+-- The `compounds` table is used to store an unique id for each
+-- compound and its name.
+--
+
+CREATE TABLE IF NOT EXISTS `compounds` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARSET utf8 COLLATE utf8_bin NOT NULL,
+  `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY id (`id`),
+  KEY name (`name`) )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+  COMMENT='Compound Library';
+
+
+--
+-- The `1D_structures` table is used to store InChI codes and SMILES
+-- strings. This table can be used for exact or substructure match
+-- queries.
+--
+
+CREATE TABLE IF NOT EXISTS `1D_structures` (
+  `compound_id` int(11) unsigned NOT NULL,
+  `inchi` text NOT NULL,
+  `smiles` text NOT NULL,
+  PRIMARY KEY compound_id (`compound_id`) )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+  COMMENT='Compound 1D Structures';
+
+
+--
+-- The `3D_structures` table is used to store MDL Molfiles.
+--
+
+CREATE TABLE IF NOT EXISTS `3D_structures` (
+  `compound_id` int(11) unsigned NOT NULL,
+  `molfile` text NOT NULL,
+  PRIMARY KEY compound_id (`compound_id`) )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+  COMMENT='Compound 3D Structures';
+
+
+--
+-- The `bin_structures` table is used to store binary descriptors.
+-- This table can be used for similarity and substructure queries.
+--
+
+CREATE TABLE IF NOT EXISTS `bin_structures` (
+  `compound_id` int(11) unsigned NOT NULL,
+  `fp2` blob NULL,
+  `obserialized` blob NULL,
+  PRIMARY KEY compound_id (`compound_id`) )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+  COMMENT='Compound Binary Structures';
+</pre></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a id="database_content"></a>2.1.1.2. Inserting Data</h4></div></div></div><p>
+          The molecular structures contained in a MDL SDF file can be
+          easily loaded into the database by using a Python or a Perl
+          script. Such a script is listed in
+          <a class="xref" href="apc.html" title="Appendix C. Loading MDL SDFFile with Python">Appendix C, <em>Loading MDL SDFFile with Python</em></a>. Once the
+          <span class="emphasis"><em>compounds</em></span> and
+          <span class="emphasis"><em>3D_structures</em></span> tables are filled, you can
+          populate the two remaining tables. To insert data into the
+          <span class="emphasis"><em>1D_structures</em></span> and
+          <span class="emphasis"><em>bin_structures</em></span> tables, use the following
+          SQL code:
+        </p><pre class="programlisting">--
+-- Database: mychem
+--
+
+USE mychem;
+
+
+--
+-- Insertion of data into the `1D_structures` table
+--
+
+INSERT INTO `1D_structures` (`compound_id`,`inchi`,`smiles`)
+SELECT `compound_id`, MOLECULE_TO_INCHI(`molfile`),
+MOLECULE_TO_SMILES(`molfile`) FROM `3D_structures`;
+
+
+--
+-- Insertion of data into the `bin_structures` table
+--
+
+INSERT INTO `bin_structures` (`compound_id`,`fp2`,`obserialized`)
+SELECT `compound_id`, FINGERPRINT2(`molfile`),
+MOLECULE_TO_SERIALIZEDOBMOL(`molfile`) FROM `3D_structures`;
+</pre><p>
+          The database is now fully usable. Additional tables can also
+          be created. For example, a table storing chemical properties
+          (molecular weight, LogP, ...) can be interesting.
+        </p></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="mychemdb_manager_database_creation"></a>2.1.2. Database creation with <code class="filename">mychemdb-manager.py</code></h3></div></div></div><p>
+        All tasks described in the previous section can also be
+        performed with the <code class="filename">mychemdb-manager.py</code>
+        script, a Python program provided with Mychem. It can be found
+        in the <code class="filename">scripts</code>
+        directory. This program aims to provide a convenient interface
+        for loading and managing chemical databases in MySQL. A complete
+        overview of this script is detailed in
+        <a class="xref" href="apd.html" title="Appendix D. Chemical Database Manager">Appendix D, <em>Chemical Database Manager</em></a>.
+      </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch01s03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch02s02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">1.3. Open Babel </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> 2.2. Examples</td></tr></table></div></body></html>

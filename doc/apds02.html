@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>D.2. mychemdb-manager.py</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="apd.html" title="Appendix D. Chemical Database Manager" /><link rel="prev" href="apd.html" title="Appendix D. Chemical Database Manager" /><link rel="next" href="ape.html" title="Appendix E. Molecule Formats" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">D.2. mychemdb-manager.py</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="apd.html">Prev</a> </td><th width="60%" align="center">Appendix D. Chemical Database Manager</th><td width="20%" align="right"> <a accesskey="n" href="ape.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="mychemdb.manager"></a>D.2. mychemdb-manager.py</h2></div></div></div><p>
+      The <code class="filename">mychemdb-manager.py</code> script can be found
+      in the <code class="filename">scripts</code> directory. It
+      is a Python program released under the new BSD license. It
+      requires the MySQLdb module. This module can be retrieved from the
+      <a class="ulink" href="http://mysql-python.sourceforge.net/" target="_top">Mysql-Python
+      Project Web Page</a>.
+    </p><p>
+      The usage of the script is simple. A help can be displayed by
+      using the <code class="option">-h</code> option:
+    </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>python mychemdb_manager.py -h</code></strong>
+Usage: mychemdb_manager.py [options] FILE
+
+mychemdb_manager.py load a file in MDL SDF format into a MySQL database and
+creates a chemical cartridge with Mychem.
+
+Options:
+  --version       show program's version number and exit
+  -h, --help      show this help message and exit
+  -H HOST         connect to host [default: localhost]
+  -U USER         user for login to MySQL [default: mychem]
+  -P              use a password to connect to MySQL (it will be asked from
+                  the tty)
+  -D DB           database to use [default: mychem]
+  -n NAMETAG      name tag to use in the MDL SDF file
+  -l LOGFILE      log file name
+  -t TABLEPREFIX  table prefix
+  -a              append data if the compound table exists
+  -r              replace data if the compound table exists
+  -u              update data if the compound table exists
+  -v              verbose mode
+</pre><p>
+      The first step is to create a database for storing the chemical
+      tables. By default, the script will use
+      <span class="emphasis"><em>mychem</em></span>, but an other database name can be
+      selected by using the <code class="option">-D</code> option.
+    </p><pre class="programlisting">--
+-- Database creation
+--
+
+CREATE DATABASE `mychem`;
+</pre><p>
+      Once the database is created, it is possible to load the MDL SDF
+      file with the <code class="filename">mychem-manager.py</code> script:
+    </p><pre class="screen"><code class="prompt"># </code><strong class="userinput"><code>python mychem-manager.py -D mychem -U user -P database.sdf</code></strong>
+Enter MySQL password:
+The MDL SDFFile has been successfully loaded.
+</pre><p>
+      The previous command will create the following tables:
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          <span class="emphasis"><em>compounds</em></span> - It contains the compound's
+          name and two timestamps (when the entry is created and when
+          the entry is updated).
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>1D_structures</em></span> - It contains the 1D
+          representation of the compounds (SMILES and InChI code).
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>3D_structures</em></span> - It contains the 3D
+          structure of the compounds in MDL Molfile format.
+        </p></li><li class="listitem"><p>
+          <span class="emphasis"><em>bin_structures</em></span> - It contains the binary
+          representation (fp2 and obserialized object) of the compounds
+          .
+        </p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+        It is possible to add a prefix to the name of the tables by
+        using the <code class="option">-t</code> option.
+      </p></div><p>
+      If all these tables already exist, the script will ask about the
+      action to perform:
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          append the new data to the existing tables
+        </p></li><li class="listitem"><p>
+          Cancel the load
+        </p></li><li class="listitem"><p>
+          Replace the existing tables
+        </p></li><li class="listitem"><p>
+          Update the existing tables with the new data
+        </p></li></ul></div><p>
+      In case only one, two or three tables exist, the update option
+      will not be available. It it possible to avoid this prompt by
+      using the <code class="option">-a</code> (append), <code class="option">-r</code>
+      (replace) or <code class="option">-u</code> (update) option when calling the
+      program.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apd.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="apd.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ape.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Appendix D. Chemical Database Manager </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Appendix E. Molecule Formats</td></tr></table></div></body></html>

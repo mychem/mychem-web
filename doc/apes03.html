@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>E.3. Fingerprints</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><meta name="keywords" content="MySQL, Chemistry, Chemical database, Chemical structure, Structure search" /><link rel="home" href="index.html" title="The Mychem Handbook" /><link rel="up" href="ape.html" title="Appendix E. Molecule Formats" /><link rel="prev" href="apes02.html" title="E.2. CML" /><link rel="next" href="apes04.html" title="E.4. InChI" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">E.3. Fingerprints</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="apes02.html">Prev</a> </td><th width="60%" align="center">Appendix E. Molecule Formats</th><td width="20%" align="right"> <a accesskey="n" href="apes04.html">Next</a></td></tr></table><hr /></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="fingerprints"></a>E.3. Fingerprints</h2></div></div></div><p>
+      This section presents fingerprint types used by the Mychem
+      software. Further details about fingerprints are given in an
+      <a class="ulink" href="http://www.dalkescientific.com/writings/diary/archive/2008/06/26/fingerprint_background.html" target="_top">article</a>
+      written by Andrew Dalke. In short, fingerprints are a bit string
+      representation of a molecule. Most of them can be classified in
+      two categories:
+    </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+          Structural fingerprint - This fingerprint type is based on
+          substructure features.
+        </p></li><li class="listitem"><p>
+          Hash fingerprints - This fingerprint type is a hash of the
+          representation of a molecule. It is used most often in
+          similarity searching, with the hypothesis that two similar
+          compounds create similar fingerprints, and that two similar
+          fingerprints means the compounds are similar.
+        </p></li></ul></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="fingerprints.fp2"></a>E.3.1. FP2</h3></div></div></div><p>
+        FP2 fingerprints index small molecule fragments based on linear
+        segments of up to 7 atoms in length. They are hash fingerprints.
+        The specification of the FP2 fingerprints is available on the
+        <a class="ulink" href="http://openbabel.org/wiki/FP2" target="_top">Open Babel
+        Website</a>.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="fingerprints.fp3"></a>E.3.2. FP3</h3></div></div></div><p>
+        FP3 fingerprints index small molecule fragments based on a list
+        of SMART patterns. They are hash fingerprints. The SMART
+        patterns are listed in the file named
+        <code class="filename">patterns.txt</code>, that is distributed with the
+        Open Babel software. The specification of the FP3 fingerprints
+        is available on the
+        <a class="ulink" href="http://openbabel.org/wiki/FP3" target="_top">Open Babel
+        Website</a>.
+      </p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="fingerprints.fp4"></a>E.3.3. FP4</h3></div></div></div><p>
+        FP4 fingerprints index small molecule fragments based on a list
+        of SMART patterns. They are hash fingerprints. The SMART
+        patterns are listed in the file named
+        <code class="filename">SMARTS_InteLigand.txt</code>, that is distributed
+        with the Open Babel software. The specification of the FP4
+        fingerprints is available on the
+        <a class="ulink" href="http://openbabel.org/wiki/FP4" target="_top">Open Babel
+        Website</a>.
+      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apes02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ape.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="apes04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">E.2. CML </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> E.4. InChI</td></tr></table></div></body></html>
